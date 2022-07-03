@@ -76,4 +76,22 @@ class UsersService:
         except Exception as e:
             return None, str(e)
 
+    @classmethod
+    def get_users(
+            cls,
+            db: Session,
+            skip: int,
+            limit: int
+    ) -> Tuple[Optional[User], str]:
 
+        try:
+
+            results = db.query(User).offset(skip).limit(limit).all()
+
+            if not results:
+                return None, 'Error'
+
+            return results, 'Success'
+
+        except Exception as e:
+            return None, str(e)
