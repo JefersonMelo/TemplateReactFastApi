@@ -84,3 +84,21 @@ async def get_user_by_email(email: str):
         msg = str(e)
         raise HTTPException(status_code=400, detail=msg)
 
+
+@api.post('/users/{user_id}/items/', tags=['items'])
+async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
+    try:
+        items = ItemsUtility()
+
+        results, msg = items.create_item_for_user(user_id=user_id, item=item)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
+
+
