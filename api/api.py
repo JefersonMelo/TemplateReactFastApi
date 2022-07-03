@@ -34,3 +34,20 @@ async def create_user(user: Optional[UserCreate] = None):
         raise HTTPException(status_code=400, detail=msg)
 
 
+@api.get('/all/users/', tags=['users'])
+async def get_all_users():
+    try:
+        users = UsersUtility()
+
+        results, msg = users.get_all_users(skip=0, limit=100)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
+
+
