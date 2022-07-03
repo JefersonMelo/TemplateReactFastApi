@@ -67,3 +67,20 @@ async def get_user(user_id: int):
         msg = str(e)
         raise HTTPException(status_code=400, detail=msg)
 
+
+@api.get('/user/email/{user_email}', tags=['users'])
+async def get_user_by_email(email: str):
+    try:
+        users = UsersUtility()
+
+        results, msg = users.get_user_by_email(email=email)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
+
