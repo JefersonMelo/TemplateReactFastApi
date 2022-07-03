@@ -17,3 +17,20 @@ async def home():
         raise HTTPException(status_code=404, detail=msg)
 
 
+@api.post('/user/', tags=['users'])
+async def create_user(user: Optional[UserCreate] = None):
+    try:
+        users = UsersUtility()
+
+        results, msg = users.create_user_email(password=user.password, email=user.email)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
+
+
