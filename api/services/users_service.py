@@ -38,3 +38,23 @@ class UsersService:
         except Exception as e:
             return None, str(e)
 
+    @classmethod
+    def get_user_id(
+            cls,
+            db: Session,
+            user_id: int,
+    ) -> Tuple[Optional[User], str]:
+
+        try:
+
+            results = db.query(User).filter(User.id == user_id).first()
+
+            if not results:
+                return None, 'Error'
+
+            return results, 'Success'
+
+        except Exception as e:
+            return None, str(e)
+
+
