@@ -34,4 +34,20 @@ class FormatHelper:
         except Exception as e:
             return None, str(e)
 
+    @classmethod
+    def clear_cpf(cls, cpf: str) -> Tuple[Optional[str], str]:
+        try:
 
+            return re.sub('[^0-9]', '', cpf), 'Belezinha'
+
+        except Exception as e:
+            return None, str(e)
+
+    @classmethod
+    def capitalize(cls, text: str) -> Tuple[Optional[str], str]:
+        try:
+
+            return text.upper(), 'Belezinha'
+
+        except Exception as e:
+            return None, str(e)
