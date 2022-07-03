@@ -83,3 +83,29 @@ class UsersUtility:
 
         except Exception as e:
             return None, str(e)
+
+    def get_all_users(
+            self,
+            skip: int,
+            limit: int
+    ) -> Tuple[Optional[UserBase], str]:
+
+        try:
+            with self.session_maker() as session:
+
+                results, msg = self.users.get_users(
+                    skip=skip,
+                    limit=limit,
+                    db=session
+                )
+
+                if not results:
+                    session.rollback()
+                    return None, msg
+
+                session.expunge_all()
+
+                return results, msg
+
+        except Exception as e:
+            return None, str(e)
