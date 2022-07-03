@@ -51,3 +51,19 @@ async def get_all_users():
         raise HTTPException(status_code=400, detail=msg)
 
 
+@api.get('/user/{user_id}', tags=['users'])
+async def get_user(user_id: int):
+    try:
+        users = UsersUtility()
+
+        results, msg = users.get_user(user_id=user_id)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
+
