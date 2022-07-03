@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -109,6 +108,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.idea
+.vscode
 
 # Spyder project settings
 .spyderproject
@@ -127,3 +128,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#db sqlite
+templateReactFasAPI.db
+
+# DEV
+comandos.py
