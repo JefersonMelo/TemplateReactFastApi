@@ -36,4 +36,28 @@ class ItemsUtility:
         except Exception as e:
             return None, str(e)
 
+    def get_all_items(
+            self,
+            skip: int,
+            limit: int
+    ) -> Tuple[Optional[Item], str]:
 
+        try:
+            with self.session_maker() as session:
+
+                results, msg = self.items.get_items(
+                    skip=skip,
+                    limit=limit,
+                    db=session
+                )
+
+                if not results:
+                    session.rollback()
+                    return None, msg
+
+                session.expunge_all()
+
+                return results, msg
+
+        except Exception as e:
+            return None, str(e)
