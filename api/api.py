@@ -102,3 +102,18 @@ async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
         raise HTTPException(status_code=400, detail=msg)
 
 
+@api.get('/items/', tags=['items'])
+def get_all_items():
+    try:
+        items = ItemsUtility()
+
+        results, msg = items.get_all_items(skip=0, limit=100)
+
+        if not results:
+            return HTTPException(status_code=400, detail=msg)
+
+        return {'detail': results, 'msg': msg}
+
+    except Exception as e:
+        msg = str(e)
+        raise HTTPException(status_code=400, detail=msg)
