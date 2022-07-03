@@ -33,3 +33,22 @@ class ItemsService:
         except Exception as e:
             return None, str(e)
 
+    @classmethod
+    def get_items(
+            cls,
+            db: Session,
+            skip: int,
+            limit: int
+    ) -> Tuple[Optional[Item], str]:
+
+        try:
+
+            results = db.query(Item).offset(skip).limit(limit).all()
+
+            if not results:
+                return None, 'Error'
+
+            return results, 'Success'
+
+        except Exception as e:
+            return None, str(e)
