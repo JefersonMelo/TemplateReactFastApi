@@ -10,12 +10,6 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
-
-class User(UserBase):
-    id: int
-    is_active: bool
-    items: list[Item] = []
-
     class Config:
         orm_mode = True
 
@@ -35,3 +29,8 @@ class Item(ItemBase):
 
     class Config:
         orm_mode = True
+
+class User(UserBase):
+    id: int
+    is_active: bool
+    items: list[Item] = []
