@@ -1,5 +1,7 @@
 from typing import Optional
 from fastapi import HTTPException
+
+from .enums.tags import Tags
 from .utilities.items_utility import ItemsUtility
 from .utilities.users_utility import UsersUtility
 from .models.schemas import UserCreate, ItemCreate
@@ -8,7 +10,7 @@ from fastapi import APIRouter
 api = APIRouter(prefix='/api')
 
 
-@api.get('/', tags=['home'])
+@api.get('/', tags=[Tags.Home])
 async def home():
     try:
         pass
@@ -17,7 +19,7 @@ async def home():
         raise HTTPException(status_code=404, detail=msg)
 
 
-@api.post('/user/', tags=['users'])
+@api.post('/user/', tags=[Tags.Users])
 async def create_user(user: Optional[UserCreate] = None):
     try:
         users = UsersUtility()
@@ -34,7 +36,7 @@ async def create_user(user: Optional[UserCreate] = None):
         raise HTTPException(status_code=400, detail=msg)
 
 
-@api.get('/all/users/', tags=['users'])
+@api.get('/all/users/', tags=[Tags.Users])
 async def get_all_users():
     try:
         users = UsersUtility()
@@ -51,7 +53,7 @@ async def get_all_users():
         raise HTTPException(status_code=400, detail=msg)
 
 
-@api.get('/user/{user_id}', tags=['users'])
+@api.get('/user/{user_id}', tags=[Tags.Users])
 async def get_user(user_id: int):
     try:
         users = UsersUtility()
@@ -68,7 +70,7 @@ async def get_user(user_id: int):
         raise HTTPException(status_code=400, detail=msg)
 
 
-@api.get('/user/email/{user_email}', tags=['users'])
+@api.get('/user/email/{user_email}', tags=[Tags.Users])
 async def get_user_by_email(email: str):
     try:
         users = UsersUtility()
@@ -85,7 +87,7 @@ async def get_user_by_email(email: str):
         raise HTTPException(status_code=400, detail=msg)
 
 
-@api.post('/users/{user_id}/items/', tags=['items'])
+@api.post('/users/{user_id}/items/', tags=[Tags.Items])
 async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
     try:
         items = ItemsUtility()
@@ -102,7 +104,7 @@ async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
         raise HTTPException(status_code=400, detail=msg)
 
 
-@api.get('/items/', tags=['items'])
+@api.get('/items/', tags=[Tags.Items])
 def get_all_items():
     try:
         items = ItemsUtility()
