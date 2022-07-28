@@ -1,42 +1,44 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import React, { forwardRef } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import { useAppContext } from "../../Contexts/AppContext";
+import MuiAlert from "@mui/material/Alert";
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+export const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 export default function WarningSnackBar() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [appContext, setAppContext] = useAppContext();
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
-
-    setOpen(false);
+    setAppContext({
+      ...appContext,
+      warning: {
+        opened: false,
+        type: appContext.warning.type,
+        msg: "",
+      },
+    });
   };
 
   return (
-    <Stack spacing={2} sx={{ width: '100%' }}>
-      <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          This is a success message!
+    <React.Fragment>
+      <Snackbar
+        open={appContext.warning.opened}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={`${appContext.warning.type}`}
+          sx={{ width: "100%" }}
+        >
+          {appContext.warning.msg}
         </Alert>
       </Snackbar>
-      <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert>
-    </Stack>
+    </React.Fragment>
   );
 }

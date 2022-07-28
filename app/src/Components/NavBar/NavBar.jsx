@@ -5,13 +5,35 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-import AppBar from "@mui/material/AppBar";
-import { AppContext, useAppContext } from "../../AppContext";
+import { styled } from "@mui/material/styles";
+import MuiAppBar from "@mui/material/AppBar";
+import { useAppContext } from "../../Contexts/AppContext";
 
-export default function NavBar({ open, setOpen }) {
-  // const [appContext, setAppContext] = useAppContext();
+export default function NavBar({ open }) {
+  const [appContext, setAppContext] = useAppContext();
+
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== "open",
+  })(({ theme, open }) => ({
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+      width: `calc(100% - ${appContext.drawerWidth}px)`,
+      marginLeft: `${appContext.drawerWidth}px`,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }));
+
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setAppContext((appContext) => ({
+      ...appContext,
+      drawerOpened: true,
+    }));
   };
 
   return (

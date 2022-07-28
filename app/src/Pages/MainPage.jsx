@@ -1,13 +1,11 @@
-import * as React from "react";
+import React from "react";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Button from "@mui/material/Button";
-import AppBar from "@mui/material/AppBar";
+import { useAppContext } from "../Contexts/AppContext";
 
 export default function MainPage({ open }) {
+  const [appContext, setAppContext] = useAppContext();
 
   const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     ({ theme, open }) => ({
@@ -17,7 +15,7 @@ export default function MainPage({ open }) {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      marginLeft: `-${drawerWidth}px`,
+      marginLeft: `-${appContext.drawerWidth}px`,
       ...(open && {
         transition: theme.transitions.create("margin", {
           easing: theme.transitions.easing.easeOut,
@@ -29,9 +27,8 @@ export default function MainPage({ open }) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ mt: 7, flexGrow: 1 }}>
       <Main open={open}>
-        <DrawerHeader />
         <Typography paragraph>Lorem...</Typography>
         <Typography paragraph>Consequat...</Typography>
       </Main>
