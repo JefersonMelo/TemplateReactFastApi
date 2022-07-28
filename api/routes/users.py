@@ -17,7 +17,7 @@ async def create_user(user: Optional[UserCreate] = None):
                                                email=user.email)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
@@ -34,7 +34,7 @@ async def get_all_users():
         results, msg = users.get_all_users(skip=0, limit=100)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
@@ -51,7 +51,7 @@ async def get_user(user_id: int):
         results, msg = users.get_user(user_id=user_id)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
@@ -68,7 +68,7 @@ async def get_user_by_email(email: str):
         results, msg = users.get_user_by_email(email=email)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
