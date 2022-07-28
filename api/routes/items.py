@@ -8,7 +8,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.post('/users/{user_id}/items/')
+@router.post('/user/{user_id}')
 async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
     try:
         items = ItemsUtility()
@@ -16,7 +16,7 @@ async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
         results, msg = items.create_item_for_user(user_id=user_id, item=item)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
@@ -25,7 +25,7 @@ async def create_item_for_user(user_id: int, item: Optional[ItemCreate]):
         raise HTTPException(status_code=400, detail=msg)
 
 
-@router.get('/items/')
+@router.get('/')
 def get_all_items():
     try:
         items = ItemsUtility()
@@ -33,7 +33,7 @@ def get_all_items():
         results, msg = items.get_all_items(skip=0, limit=100)
 
         if not results:
-            return HTTPException(status_code=400, detail=msg)
+            raise HTTPException(status_code=400, detail=msg)
 
         return {'detail': results, 'msg': msg}
 
