@@ -19,6 +19,14 @@ class UsersUtility:
         try:
             with self.session_maker() as session:
 
+                results, msg = self.users.get_user_email(
+                    email=email,
+                    db=session
+                )
+
+                if results:
+                    return None, 'Usuário Já Cadastrado. Cadastre Outro Email'
+
                 results, msg = self.users.create_user(
                     password=password,
                     email=email,
