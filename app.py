@@ -26,9 +26,3 @@ app.add_middleware(GZipMiddleware)
 # Show React build files
 app.mount('/static', StaticFiles(directory='app/build/static'), name='static')
 templates = Jinja2Templates(directory='app/build')
-
-
-# Serves Single Page Application files (eg: React)
-@app.get('/{full_path:path}')
-async def serve_spa(request: Request):
-    return templates.TemplateResponse('index.html', {'request': request})
